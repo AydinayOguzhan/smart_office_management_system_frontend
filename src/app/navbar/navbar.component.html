@@ -1,0 +1,57 @@
+<nav class="navbar navbar-dark bg-primary navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">
+      <!-- <i class="bi bi-text-left"></i> -->
+      <i class="bi bi-list-nested iconSize"></i>
+    </button>
+    <!-- <a class="navbar-brand" href="/admin-panel">Akıllı Ofis Yönetim Sistemi</a> -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+      </ul>
+      <!-- TODO: Bildirim yoksa boş olan, bildirim varsa dolu olan ikon görünecek -->
+      <!-- TODO: Bildirim için custom drowdown oluştur -->
+      <a href="/admin-panel"><i class="bi bi-bell text-white iconSize me-4"></i></a>
+      <!-- <a href="/admin-panel"><i class="bi bi-bell-fill text-white iconSize me-4"></i></a> -->
+
+      <!-- Example single danger button -->
+
+
+      <a href="/admin-panel"><i class="bi bi-arrow-bar-right text-white iconSize me-3"></i></a>
+    </div>
+  </div>
+</nav>
+
+<!-- Sidebar -->
+<div class="offcanvas offcanvas-start text-primary " tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h4 class="offcanvas-title" id="offcanvasExampleLabel">Akıllı Ofis Yönetim Sistemi</h4>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="/admin-panel" [ngClass]="active === 1?'nav-link text-white fs-5 bg-primary':'nav-link link-dark fs-5'" >
+          <i [ngClass]="active===1? 'bi bi-bar-chart-line text-white': 'bi bi-bar-chart-line text-purple-drk-50'"></i>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="/admin-panel" [ngClass]="active === 2?'nav-link text-white fs-5 bg-primary':'nav-link link-dark fs-5'">
+          <i [ngClass]="active===2?'bi bi-camera-video text-white':'bi bi-camera-video text-purple-drk-50'"></i>
+          Canlı Yayın
+        </a>
+      </li>
+      <li>
+        <a href="/admin-panel" [ngClass]="active === 3?'nav-link text-white fs-5 bg-primary':'nav-link link-dark fs-5'">
+          <i [ngClass]="active===3?'bi bi-camera-reels text-white':'bi bi-camera-reels text-purple-drk-50'"></i>
+          Kayıt
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

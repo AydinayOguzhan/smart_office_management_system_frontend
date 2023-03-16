@@ -1,0 +1,22 @@
+//Bootstraptaki color_map'i birleştirmek için
+
+$custom-colors: (
+  "primary": #70163c,
+  // "secondary": #D1CEC9,
+  "dark": #1E2019,
+  "purple-drk-50": #380b1e,
+  "purple-drk-40": #430d24,
+  "purple-drk-30": #4e0f2a,
+  "purple-drk-20": #5a1230,
+  "purple-drk-10": #651436,
+  "purple-brght-10": #7E2D50,
+  "purple-brght-20": #8D4563,
+  "purple-brght-30": #9B5C77,
+  "purple-brght-40": #A9738A,
+  "purple-brght-50": #B88B9E,
+  "purple-brght-60": #C6A2B1,
+  "purple-brght-70": #D4B9C5,
+  "white": #ffffff,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);

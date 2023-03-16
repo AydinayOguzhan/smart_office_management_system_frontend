@@ -1,0 +1,13 @@
+//variables
+// @import "./abstract/variables.scss";
+
+//required
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
+
+//color-map
+@import "./abstract/map-amends";
+
+//required
+@import "../../../node_modules/bootstrap";
