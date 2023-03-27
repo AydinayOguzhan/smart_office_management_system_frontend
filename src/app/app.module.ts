@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { AdminsPageComponent } from './admins-page/admins-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LiveStreamComponent } from './live-stream/live-stream.component';
+import { RecordsComponent } from './records/records.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +15,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     AdminsPageComponent,
     LoginPageComponent,
     NavbarComponent,
+    LiveStreamComponent,
+    RecordsComponent,
   ],
   imports: [
     BrowserModule,
