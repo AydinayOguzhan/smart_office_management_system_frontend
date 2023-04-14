@@ -1,6 +1,7 @@
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, FormControl, Validators, UntypedFormBuilder } from "@angular/forms";
+import { LoginService } from 'src/services/login/login.service';
 
 @Component({
   selector: 'app-login-page',
@@ -10,7 +11,7 @@ import { UntypedFormGroup, FormControl, Validators, UntypedFormBuilder } from "@
 export class LoginPageComponent implements OnInit {
   loginForm:UntypedFormGroup;
 
-  constructor(private formBuilder:UntypedFormBuilder, private toastrService:ToastrService) { }
+  constructor(private formBuilder:UntypedFormBuilder, private toastrService:ToastrService, private loginService:LoginService) { }
 
   ngOnInit(): void {
     this.createLoginForm();
@@ -24,13 +25,21 @@ export class LoginPageComponent implements OnInit {
   }
 
   login(){
-    // window.location.replace("/admin-panel");
     if (this.loginForm.valid) {
       let user = Object.assign({},this.loginForm.value);
-      console.log(user);
+      this.loginService.login(user).subscribe((response)=>{
+        if(response.success === true){
+          // window.localStorage.setItem("token",response.data.token);
+          // window.localStorage.setItem("expiration", response.data.expiration);
+          window.localStorage.setItem("token", response.data);
+          window.localStorage.setItem("email", user.email);
+          this.toastrService.success("İşlem başarılı","",{timeOut:1000}).onHidden.subscribe(()=>{window.location.replace("/admin-panel")});
+        }else{
+          this.toastrService.error(response.message);
+        }
+      })
     }else{
       this.toastrService.error("Lütfen boş alan bırakmayınız");
-      console.log("Please fill the empty spaces");
     }
   }
 }
