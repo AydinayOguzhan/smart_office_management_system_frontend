@@ -33,7 +33,7 @@ export class LoginPageComponent implements OnInit {
           // window.localStorage.setItem("expiration", response.data.expiration);
           window.localStorage.setItem("token", response.data);
           window.localStorage.setItem("email", user.email);
-          this.toastrService.success("İşlem başarılı","",{timeOut:1000}).onHidden.subscribe(()=>{window.location.replace("/admin-panel")});
+          this.toastrService.success("İşlem başarılı","",{timeOut:500}).onHidden.subscribe(()=>{window.location.replace("/admin-panel")});
         }else{
           this.toastrService.error(response.message);
         }
