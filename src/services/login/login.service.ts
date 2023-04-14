@@ -11,18 +11,25 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class LoginService {
-  urls = new Urls;
 
   constructor(private httpClient:HttpClient, private router:Router) { }
 
   //TODO: Backend ayarlandıktan sonra burası token model dönmeli
   login(loginModel:LoginModel):Observable<SingleResponseModel<string>>{
-    let url = this.urls.prodApiUrl + this.urls.auth + this.urls.login;
+    let url = Urls.prodApiUrl + Urls.auth + Urls.login;
     return this.httpClient.post<SingleResponseModel<string>>(url,loginModel);
   }
 
   logout(){
     localStorage.clear();
     this.router.navigate(["/"]);
+  }
+
+  isAuthenticated(){
+    if (localStorage.getItem("token")) {
+      return true;
+    }else{
+      return false;
+    }
   }
 }

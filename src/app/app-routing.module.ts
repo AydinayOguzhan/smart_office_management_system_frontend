@@ -4,13 +4,14 @@ import { AdminsPageComponent } from './admins-page/admins-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginGuard } from 'src/guards/login/login.guard';
 
 const routes: Routes = [
   {path:"", component:LoginPageComponent},
   {path:"login", component:LoginPageComponent},
-  {path:"admin-panel", component:AdminsPageComponent},
-  {path:"live-stream", component:LiveStreamComponent},
-  {path:"records", component:RecordsComponent}
+  {path:"admin-panel", component:AdminsPageComponent, canActivate:[LoginGuard]},
+  {path:"live-stream", component:LiveStreamComponent, canActivate:[LoginGuard]},
+  {path:"records", component:RecordsComponent, canActivate:[LoginGuard]}
 ];
 
 @NgModule({
