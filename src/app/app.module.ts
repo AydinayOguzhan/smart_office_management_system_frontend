@@ -13,8 +13,9 @@ import { LiveStreamComponent } from './live-stream/live-stream.component';
 import { RecordsComponent } from './records/records.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { AuthInterceptor } from 'src/interceptors/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { RouterModule } from '@angular/router';
       positionClass:"toast-bottom-right"
     })
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
