@@ -20,4 +20,8 @@ export class LoginService {
     return this.httpClient.post<SingleResponseModel<string>>(url,loginModel);
   }
 
+  logout(){
+    localStorage.clear();
+    window.location.replace("/");
+  }
 }
