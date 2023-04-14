@@ -5,6 +5,7 @@ import { SingleResponseModel } from 'src/models/singleResponseModel';
 import { TokenModel } from 'src/models/tokenModel';
 import { HttpClient } from '@angular/common/http';
 import { Urls } from 'src/constants/urls';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { Urls } from 'src/constants/urls';
 export class LoginService {
   urls = new Urls;
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient:HttpClient, private router:Router) { }
 
   //TODO: Backend ayarlandıktan sonra burası token model dönmeli
   login(loginModel:LoginModel):Observable<SingleResponseModel<string>>{
@@ -22,6 +23,6 @@ export class LoginService {
 
   logout(){
     localStorage.clear();
-    window.location.replace("/");
+    this.router.navigate(["/"]);
   }
 }
