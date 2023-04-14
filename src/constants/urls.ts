@@ -1,6 +1,6 @@
 export class Urls{
-  readonly apiUrl:string = "http://localhost:3000";
-  readonly prodApiUrl:string = "http://localhost:5000";
-  readonly auth:string = "/auth";
-  readonly login:string = "/login";
+  static readonly apiUrl:string = "http://localhost:3000";
+  static readonly prodApiUrl:string = "http://localhost:5000";
+  static readonly auth:string = "/auth";
+  static readonly login:string = "/login";
 }
