@@ -1,6 +1,6 @@
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, FormControl, Validators, UntypedFormBuilder } from "@angular/forms";
 
 @Component({
   selector: 'app-login-page',
@@ -8,9 +8,9 @@ import { FormGroup, FormControl, Validators, FormBuilder } from "@angular/forms"
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
-  loginForm:FormGroup;
+  loginForm:UntypedFormGroup;
 
-  constructor(private formBuilder:FormBuilder, private toastrService:ToastrService) { }
+  constructor(private formBuilder:UntypedFormBuilder, private toastrService:ToastrService) { }
 
   ngOnInit(): void {
     this.createLoginForm();
