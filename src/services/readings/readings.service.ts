@@ -12,20 +12,22 @@ import { ReadingHumidityModel } from 'src/models/readings/readingHumidityModel';
 })
 export class ReadingsService {
 
+  baseUrl:string = Urls.prodApiUrl + Urls.readings;
+
   constructor(private httpClient:HttpClient) { }
 
   getDevices():Observable<ListResponseModel<ReadingDeviceModel>>{
-    let url = Urls.prodApiUrl + Urls.readings + Urls.getDevices;
+    let url = this.baseUrl + Urls.getDevices;
     return this.httpClient.get<ListResponseModel<ReadingDeviceModel>>(url);
   }
 
   getTemperaturesByDeviceId(deviceId:number):Observable<ListResponseModel<ReadingTemperatureModel>>{
-    let url = Urls.prodApiUrl + Urls.readings + Urls.getTemperaturesByDevice + `/${deviceId}`;
+    let url = this.baseUrl + Urls.getTemperaturesByDevice + `/${deviceId}`;
     return this.httpClient.get<ListResponseModel<ReadingTemperatureModel>>(url);
   }
 
   getHumiditiesByDeviceId(deviceId:number):Observable<ListResponseModel<ReadingHumidityModel>>{
-    let url = Urls.prodApiUrl + Urls.readings + Urls.getHumiditiesByDevice + `/${deviceId}`;
+    let url = this.baseUrl + Urls.getHumiditiesByDevice + `/${deviceId}`;
     return this.httpClient.get<ListResponseModel<ReadingHumidityModel>>(url);
   }
 }
