@@ -8,20 +8,32 @@
     <div class="row">
 
       <div class="col-sm-6 mb-3 mb-sm-0">
-        <div class="card">
+        <div *ngIf="!isTemperatureData" class="spinner-grow text-primary" role="status"></div>
+
+        <div *ngIf="isTemperatureData | async" class="card">
           <div class="card-header bg-purple-brght-10 text-white">
-            <h2>deneme</h2>
+            <div class="d-flex justify-content-between">
+              <h2>Sıcaklık</h2>
+
+              <select #readingDevices (change)="readingsDeviceChange(readingDevices.value)" class="form-select w-50 text-primary" aria-label="Default select example">
+                <option>Lütfen bir cihaz seçiniz</option>
+                <option *ngFor="let item of devices" [selected]="item._id.device_id == deviceId" value="{{item._id.device_id}}">{{item._id.device_name}}</option>
+
+              </select>
+            </div>
+            <div class="d-flex justify-content-end">
+            </div>
           </div>
           <div class="card-body">
             <div id="lineChart1">
               <apx-chart
-              [series]="chart1Options.series"
-              [chart]="chart1Options.chart"
-              [xaxis]="chart1Options.xaxis"
-              [dataLabels]="chart1Options.dataLabels"
-              [grid]="chart1Options.grid"
-              [stroke]="chart1Options.stroke"
-              [title]="chart1Options.title"
+              [series]="temperatureChartOptions.series"
+              [chart]="temperatureChartOptions.chart"
+              [xaxis]="temperatureChartOptions.xaxis"
+              [dataLabels]="temperatureChartOptions.dataLabels"
+              [grid]="temperatureChartOptions.grid"
+              [stroke]="temperatureChartOptions.stroke"
+              [title]="temperatureChartOptions.title"
               ></apx-chart>
             </div>
           </div>
@@ -29,20 +41,30 @@
       </div>
 
       <div class="col-sm-6">
-        <div class="card">
+        <div *ngIf="!isHumiditiesData" class="spinner-grow text-primary" role="status"></div>
+
+        <div *ngIf="isHumiditiesData | async" class="card">
           <div class="card-header bg-purple-drk-10 text-white">
-            <h2>deneme</h2>
+            <div class="d-flex justify-content-between">
+              <h2>Nem</h2>
+
+              <select #readingDevices (change)="readingHumidityDeviceChange(readingDevices.value)" class="form-select w-50 text-primary" aria-label="Default select example">
+                <option>Lütfen bir cihaz seçiniz</option>
+                <option *ngFor="let item of devices" [selected]="item._id.device_id == humidityDeviceId" value="{{item._id.device_id}}">{{item._id.device_name}}</option>
+
+              </select>
+            </div>
           </div>
           <div class="card-body">
             <div id="lineChart2">
               <apx-chart
-              [series]="chart2Options.series"
-              [chart]="chart2Options.chart"
-              [xaxis]="chart2Options.xaxis"
-              [dataLabels]="chart2Options.dataLabels"
-              [grid]="chart2Options.grid"
-              [stroke]="chart2Options.stroke"
-              [title]="chart2Options.title"
+              [series]="humidityChartOptions.series"
+              [chart]="humidityChartOptions.chart"
+              [xaxis]="humidityChartOptions.xaxis"
+              [dataLabels]="humidityChartOptions.dataLabels"
+              [grid]="humidityChartOptions.grid"
+              [stroke]="humidityChartOptions.stroke"
+              [title]="humidityChartOptions.title"
               ></apx-chart>
             </div>
           </div>
@@ -59,7 +81,7 @@
             <h2>deneme</h2>
           </div>
           <div class="card-body">
-            <div id="lineChart3">
+            <!-- <div id="lineChart3">
               <apx-chart
               [series]="chart3Options.series"
               [chart]="chart3Options.chart"
@@ -69,7 +91,7 @@
               [stroke]="chart3Options.stroke"
               [title]="chart3Options.title"
               ></apx-chart>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -80,7 +102,7 @@
             <h2>deneme</h2>
           </div>
           <div class="card-body">
-            <div id="lineChart4">
+            <!-- <div id="lineChart4">
               <apx-chart
               [series]="chart4Options.series"
               [chart]="chart4Options.chart"
@@ -90,7 +112,7 @@
               [stroke]="chart4Options.stroke"
               [title]="chart4Options.title"
               ></apx-chart>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

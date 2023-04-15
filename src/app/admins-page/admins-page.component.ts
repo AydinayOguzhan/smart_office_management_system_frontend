@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { NavbarService } from './../../services/navbar/navbar.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -14,6 +15,12 @@ import {
   ApexFill,
   ApexTheme
 } from "ng-apexcharts";
+import { ToastrService } from 'ngx-toastr';
+import { Messages } from 'src/constants/messages';
+import { Urls } from 'src/constants/urls';
+import { ReadingDeviceModel } from 'src/models/readings/readingDeviceModel';
+import { ReadingTemperatureModel } from 'src/models/readings/readingTemperatureModel';
+import { ReadingsService } from 'src/services/readings/readings.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -25,6 +32,10 @@ export type ChartOptions = {
   title: ApexTitleSubtitle;
 };
 
+export interface deneme {
+  x: string,
+  y: number
+}
 
 @Component({
   selector: 'app-admins-page',
@@ -32,28 +43,94 @@ export type ChartOptions = {
   styleUrls: ['./admins-page.component.scss']
 })
 export class AdminsPageComponent implements OnInit {
-  chart1Options: Partial<ChartOptions> | any;
-  chart2Options: Partial<ChartOptions> | any;
+  temperatureChartOptions: Partial<ChartOptions> | any;
+  humidityChartOptions: Partial<ChartOptions> | any;
   chart3Options: Partial<ChartOptions> | any;
   chart4Options: Partial<ChartOptions> | any;
 
-  constructor(private navbarService: NavbarService) { }
+  devices: ReadingDeviceModel[];
+
+  deviceId: number = 10;
+  temperatures:any = new Array();
+  temperatureDates:any = new Array();
+  isTemperatureData:Promise<boolean>;
+
+  humidityDeviceId: number = 10;
+  humidities:any = new Array();
+  humidityDates:any = new Array();
+  isHumiditiesData:Promise<boolean>;
+
+  constructor(private navbarService: NavbarService, private readingsService: ReadingsService,
+    private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.navbarService.changeActive(1);
-    this.chart1Options = this.data("line");
-    this.chart2Options = this.data("bar");
-    this.chart3Options = this.data("area");
-    this.chart4Options = this.radarChart();
+
+    this.getDevices();
+    this.readingTemperaturesByDeviceId();
+    this.readingHumiditiesByDeviceId();
+
+    this.temperatureChartOptions = this.temperatureData("line");
+    this.humidityChartOptions = this.humidityData("line");
+
+    // this.chart3Options = this.data("area");
+    // this.chart4Options = this.radarChart();
+
   }
 
+  getDevices() {
+    this.readingsService.getDevices().subscribe((response) => {
+      if (response.success === false) this.toastrService.error(Messages.somethingWentWrong);
+      else this.devices = response.data;
+    });
+  }
 
-  data(type: string) {
+  readingTemperaturesByDeviceId() {
+    this.readingsService.getTemperaturesByDeviceId(this.deviceId).subscribe((response) => {
+      if (response.success === false) this.toastrService.error(Messages.somethingWentWrong);
+      else {
+        this.temperatureDates.splice(0);
+        this.temperatures.splice(0);
+        response.data.forEach((element) => {
+          this.temperatures.push(element.temperature);
+          this.temperatureDates.push(element.timestamp);
+        })
+        this.isTemperatureData = Promise.resolve(true);
+      }
+    });
+  }
+
+  readingHumiditiesByDeviceId() {
+    this.readingsService.getHumiditiesByDeviceId(this.humidityDeviceId).subscribe((response) => {
+      if (response.success === false) this.toastrService.error(Messages.somethingWentWrong);
+      else {
+        this.humidities.splice(0);
+        this.humidityDates.splice(0);
+        response.data.forEach((element) => {
+          this.humidities.push(element.humidity);
+          this.humidityDates.push(element.timestamp);
+        })
+        this.isHumiditiesData = Promise.resolve(true);
+      }
+    });
+  }
+
+  readingsDeviceChange(value: string) {
+    this.deviceId = Number(value);
+    this.readingTemperaturesByDeviceId();
+  }
+
+  readingHumidityDeviceChange(value: string) {
+    this.humidityDeviceId = Number(value);
+    this.readingHumiditiesByDeviceId();
+  }
+
+  temperatureData(type: string) {
     return {
       series: [
         {
-          name: "Desktops",
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+          name: "Ölçümler",
+          data: this.temperatures
         }
       ],
       chart: {
@@ -67,21 +144,41 @@ export class AdminsPageComponent implements OnInit {
         enabled: false
       },
       title: {
-        text: "Product Trends by Month",
+        text: "Cihazın Ölçtüğü Sıcaklık Değerleri",
         align: "left"
       },
       xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep"
-        ]
+        // type:"datetime",
+        categories: this.temperatureDates
+      }
+    }
+  }
+
+  humidityData(type: string) {
+    return {
+      series: [
+        {
+          name: "Ölçümler",
+          data: this.humidities
+        }
+      ],
+      chart: {
+        height: 350,
+        type: type,
+        zoom: {
+          enabled: true
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      title: {
+        text: "Cihazın Ölçtüğü Nem Değerleri",
+        align: "left"
+      },
+      xaxis: {
+        // type:"datetime",
+        categories: this.humidityDates
       }
     }
   }
