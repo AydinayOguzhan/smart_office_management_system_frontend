@@ -10,4 +10,9 @@ export class Urls{
   static readonly getTemperaturesByDevice:string = "/get_temperatures_by_device";
   static readonly getHumiditiesByDevice:string = "/get_humidities_by_device";
 
+  static readonly motions:string = "/motions";
+  static readonly getMotionDevices:string = "/get_motion_devices";
+  static readonly getAllMotions:string = "/get_all_motions";
+  static readonly getAllMotionsByDevice:string = "/get_all_motions_by_device";
+  static readonly getAllMotionSensorStatistics:string = "/get_all_motion_sensor_statistics";
 }

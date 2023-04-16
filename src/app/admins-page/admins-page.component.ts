@@ -13,7 +13,7 @@ import {
   ApexGrid,
   ApexPlotOptions,
   ApexFill,
-  ApexTheme
+  ApexTheme,
 } from "ng-apexcharts";
 import { ToastrService } from 'ngx-toastr';
 import { Messages } from 'src/constants/messages';
@@ -21,6 +21,8 @@ import { Urls } from 'src/constants/urls';
 import { ReadingDeviceModel } from 'src/models/readings/readingDeviceModel';
 import { ReadingTemperatureModel } from 'src/models/readings/readingTemperatureModel';
 import { ReadingsService } from 'src/services/readings/readings.service';
+import { MotionDeviceModel } from 'src/models/motionSensors/motionDeviceModel';
+import { MotionsService } from 'src/services/motions/motions.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -30,6 +32,7 @@ export type ChartOptions = {
   grid: ApexGrid;
   stroke: ApexStroke;
   title: ApexTitleSubtitle;
+  plotOptions:ApexPlotOptions;
 };
 
 export interface deneme {
@@ -45,7 +48,7 @@ export interface deneme {
 export class AdminsPageComponent implements OnInit {
   temperatureChartOptions: Partial<ChartOptions> | any;
   humidityChartOptions: Partial<ChartOptions> | any;
-  chart3Options: Partial<ChartOptions> | any;
+  motionSensorStatisticsChart: Partial<ChartOptions> | any;
   chart4Options: Partial<ChartOptions> | any;
 
   devices: ReadingDeviceModel[];
@@ -60,8 +63,15 @@ export class AdminsPageComponent implements OnInit {
   humidityDates:any = new Array();
   isHumiditiesData:Promise<boolean>;
 
+  motionDevices:MotionDeviceModel[];
+  motionDeviceId:number = 1;
+  motionSensorStatisticDeviceIds:any = new Array();
+  motionSensorStatisticCounts:any = new Array();
+
+
+
   constructor(private navbarService: NavbarService, private readingsService: ReadingsService,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService, private motionService:MotionsService) { }
 
   ngOnInit(): void {
     this.navbarService.changeActive(1);
@@ -69,12 +79,13 @@ export class AdminsPageComponent implements OnInit {
     this.getDevices();
     this.readingTemperaturesByDeviceId();
     this.readingHumiditiesByDeviceId();
+    this.getAllMotionSensorStatistics();
 
     this.temperatureChartOptions = this.temperatureData("line");
     this.humidityChartOptions = this.humidityData("line");
+    this.motionSensorStatisticsChart = this.motionSensorStatisticsRadarChartData();
 
     // this.chart3Options = this.data("area");
-    // this.chart4Options = this.radarChart();
 
   }
 
@@ -111,6 +122,21 @@ export class AdminsPageComponent implements OnInit {
           this.humidityDates.push(element.timestamp);
         })
         this.isHumiditiesData = Promise.resolve(true);
+      }
+    });
+  }
+
+  getAllMotionSensorStatistics(){
+    this.motionService.getAllMotionSensorStatistic().subscribe((response)=>{
+      if (response.success === false) this.toastrService.error(Messages.somethingWentWrong);
+      else{
+        console.log(response)
+        this.motionSensorStatisticDeviceIds.splice(0);
+        this.motionSensorStatisticCounts.splice(0);
+        response.data.forEach((element)=>{
+          this.motionSensorStatisticDeviceIds.push(element._id);
+          this.motionSensorStatisticCounts.push(element.count);
+        })
       }
     });
   }
@@ -183,23 +209,28 @@ export class AdminsPageComponent implements OnInit {
     }
   }
 
-  radarChart() {
+  motionSensorStatisticsRadarChartData() {
     return {
       series: [
         {
-          name: "Series 1",
-          data: [80, 50, 30, 40, 100, 20]
+          name: "Toplam adet",
+          data: this.motionSensorStatisticCounts
         }
       ],
       chart: {
         height: 350,
-        type: "radar"
+        type: "bar"
+      },
+      plotOptions:{
+        bar:{
+          horizontal:true
+        }
       },
       title: {
-        text: "Basic Radar Chart"
+        text: "Cihazların algıladığı toplam hareket sayıları"
       },
       xaxis: {
-        categories: ["January", "February", "March", "April", "May", "June"]
+        categories: this.motionSensorStatisticDeviceIds
       }
     }
   }
