@@ -14,10 +14,9 @@ export class LoginService {
 
   constructor(private httpClient:HttpClient, private router:Router) { }
 
-  //TODO: Backend ayarlandıktan sonra burası token model dönmeli
-  login(loginModel:LoginModel):Observable<SingleResponseModel<string>>{
+  login(loginModel:LoginModel):Observable<SingleResponseModel<TokenModel>>{
     let url = Urls.prodApiUrl + Urls.auth + Urls.login;
-    return this.httpClient.post<SingleResponseModel<string>>(url,loginModel);
+    return this.httpClient.post<SingleResponseModel<TokenModel>>(url,loginModel);
   }
 
   logout(){

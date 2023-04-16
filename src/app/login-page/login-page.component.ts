@@ -31,9 +31,8 @@ export class LoginPageComponent implements OnInit {
       let user = Object.assign({},this.loginForm.value);
       this.loginService.login(user).subscribe((response)=>{
         if(response.success === true){
-          // window.localStorage.setItem("token",response.data.token);
-          // window.localStorage.setItem("expiration", response.data.expiration);
-          window.localStorage.setItem("token", response.data);
+          window.localStorage.setItem("token", response.data.token);
+          window.localStorage.setItem("expirationDate", response.data.expirationDate);
           window.localStorage.setItem("email", user.email);
           this.toastrService.success("İşlem başarılı","",{timeOut:500}).onHidden.subscribe(()=>{this.router.navigate(["admin-panel"])});
         }else{
