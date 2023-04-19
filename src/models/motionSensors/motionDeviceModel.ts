@@ -1,5 +1,6 @@
-import { ReadingDeviceModel } from "../readings/readingDeviceModel";
-
-export interface MotionDeviceModel extends ReadingDeviceModel{
-
+export interface MotionDeviceModel{
+  _id:{
+    device_id:number,
+    device_name:string
+  }
 }
