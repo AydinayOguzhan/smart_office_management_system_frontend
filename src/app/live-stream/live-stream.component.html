@@ -5,7 +5,11 @@
 </div>
 
 <div class="d-flex justify-content-center">
-  <iframe src="http://192.168.1.69:8000/index.html" width="100%" height="500" frameborder="0"></iframe>
+  <div *ngIf="!isIframeLoaded" class="spinner-grow text-primary" role="status"></div>
+</div>
+
+<div class="d-flex justify-content-center">
+  <iframe (load)="onIframeLoad()" id="iFrameId" src="http://192.168.1.69:8000/index.html" width="100%" height="500" frameborder="0"></iframe>
 </div>
 
 
