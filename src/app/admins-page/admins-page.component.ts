@@ -23,6 +23,7 @@ import { ReadingTemperatureModel } from 'src/models/readings/readingTemperatureM
 import { ReadingsService } from 'src/services/readings/readings.service';
 import { MotionDeviceModel } from 'src/models/motionSensors/motionDeviceModel';
 import { MotionsService } from 'src/services/motions/motions.service';
+import { MotionModel } from 'src/models/motionSensors/motionModel';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -63,15 +64,18 @@ export class AdminsPageComponent implements OnInit {
   humidityDates:any = new Array();
   isHumiditiesData:Promise<boolean>;
 
-  motionDevices:MotionDeviceModel[];
   motionDeviceId:number = 1;
   motionSensorStatisticDeviceIds:any = new Array();
   motionSensorStatisticCounts:any = new Array();
+  isMotionSensorStatisticsData:Promise<boolean>;
 
-
+  isMotionDevicesData:Promise<boolean>;
+  isAllMotionsData:Promise<boolean>;
+  motionDevices:MotionDeviceModel[];
+  allMotions:MotionModel[];
 
   constructor(private navbarService: NavbarService, private readingsService: ReadingsService,
-    private toastrService: ToastrService, private motionService:MotionsService) { }
+  private toastrService: ToastrService, private motionService:MotionsService) { }
 
   ngOnInit(): void {
     this.navbarService.changeActive(1);
@@ -83,7 +87,7 @@ export class AdminsPageComponent implements OnInit {
 
     this.temperatureChartOptions = this.temperatureData("line");
     this.humidityChartOptions = this.humidityData("line");
-    this.motionSensorStatisticsChart = this.motionSensorStatisticsRadarChartData();
+    this.motionSensorStatisticsChart = this.motionSensorStatisticsRadarChartData("bar");
 
     // this.chart3Options = this.data("area");
 
@@ -130,13 +134,13 @@ export class AdminsPageComponent implements OnInit {
     this.motionService.getAllMotionSensorStatistic().subscribe((response)=>{
       if (response.success === false) this.toastrService.error(Messages.somethingWentWrong);
       else{
-        console.log(response)
         this.motionSensorStatisticDeviceIds.splice(0);
         this.motionSensorStatisticCounts.splice(0);
         response.data.forEach((element)=>{
-          this.motionSensorStatisticDeviceIds.push(element._id);
+          this.motionSensorStatisticDeviceIds.push(element.device_name);
           this.motionSensorStatisticCounts.push(element.count);
-        })
+        });
+        this.isMotionSensorStatisticsData = Promise.resolve(true);
       }
     });
   }
@@ -150,6 +154,35 @@ export class AdminsPageComponent implements OnInit {
     this.humidityDeviceId = Number(value);
     this.readingHumiditiesByDeviceId();
   }
+
+  getAllMotionDevices(){
+    this.motionService.getMotionDevices().subscribe((response)=>{
+      if (response.success === false) this.toastrService.error(Messages.somethingWentWrong);
+      else{
+        this.motionDevices = response.data;
+        this.isMotionDevicesData = Promise.resolve(true);
+      }
+    });
+  }
+
+  getAllMotionsById(deviceId:string){
+    this.motionService.getAllMotionsByDeviceId(Number(deviceId)).subscribe((response)=>{
+      if (response.success === false) this.toastrService.error(Messages.somethingWentWrong);
+      else{
+        this.allMotions = response.data;
+        this.isAllMotionsData = Promise.resolve(true);
+      }
+    });
+  }
+
+  showMotionDetails(){
+    this.getAllMotionDevices();
+  }
+
+  motionDeviceChange(deviceId:string){
+    this.getAllMotionsById(deviceId);
+  }
+
 
   temperatureData(type: string) {
     return {
@@ -209,7 +242,7 @@ export class AdminsPageComponent implements OnInit {
     }
   }
 
-  motionSensorStatisticsRadarChartData() {
+  motionSensorStatisticsRadarChartData(type:string) {
     return {
       series: [
         {
@@ -219,7 +252,7 @@ export class AdminsPageComponent implements OnInit {
       ],
       chart: {
         height: 350,
-        type: "bar"
+        type: type
       },
       plotOptions:{
         bar:{

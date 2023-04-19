@@ -1,4 +1,3 @@
-
 <div>
   <app-navbar></app-navbar>
 
@@ -15,9 +14,11 @@
             <div class="d-flex justify-content-between">
               <h2>Sıcaklık</h2>
 
-              <select #readingDevices (change)="readingsDeviceChange(readingDevices.value)" class="form-select w-50 text-primary" aria-label="Default select example">
+              <select #readingDevices (change)="readingsDeviceChange(readingDevices.value)"
+                class="form-select w-50 text-primary" aria-label="Default select example">
                 <option>Lütfen bir cihaz seçiniz</option>
-                <option *ngFor="let item of devices" [selected]="item._id.device_id == deviceId" value="{{item._id.device_id}}">{{item._id.device_name}}</option>
+                <option *ngFor="let item of devices" [selected]="item._id.device_id == deviceId"
+                  value="{{item._id.device_id}}">{{item._id.device_name}}</option>
 
               </select>
             </div>
@@ -26,15 +27,10 @@
           </div>
           <div class="card-body">
             <div id="lineChart1">
-              <apx-chart
-              [series]="temperatureChartOptions.series"
-              [chart]="temperatureChartOptions.chart"
-              [xaxis]="temperatureChartOptions.xaxis"
-              [dataLabels]="temperatureChartOptions.dataLabels"
-              [grid]="temperatureChartOptions.grid"
-              [stroke]="temperatureChartOptions.stroke"
-              [title]="temperatureChartOptions.title"
-              ></apx-chart>
+              <apx-chart [series]="temperatureChartOptions.series" [chart]="temperatureChartOptions.chart"
+                [xaxis]="temperatureChartOptions.xaxis" [dataLabels]="temperatureChartOptions.dataLabels"
+                [grid]="temperatureChartOptions.grid" [stroke]="temperatureChartOptions.stroke"
+                [title]="temperatureChartOptions.title"></apx-chart>
             </div>
           </div>
         </div>
@@ -48,24 +44,21 @@
             <div class="d-flex justify-content-between">
               <h2>Nem</h2>
 
-              <select #readingDevices (change)="readingHumidityDeviceChange(readingDevices.value)" class="form-select w-50 text-primary" aria-label="Default select example">
+              <select #readingDevices (change)="readingHumidityDeviceChange(readingDevices.value)"
+                class="form-select w-50 text-primary" aria-label="Default select example">
                 <option>Lütfen bir cihaz seçiniz</option>
-                <option *ngFor="let item of devices" [selected]="item._id.device_id == humidityDeviceId" value="{{item._id.device_id}}">{{item._id.device_name}}</option>
+                <option *ngFor="let item of devices" [selected]="item._id.device_id == humidityDeviceId"
+                  value="{{item._id.device_id}}">{{item._id.device_name}}</option>
 
               </select>
             </div>
           </div>
           <div class="card-body">
             <div id="lineChart2">
-              <apx-chart
-              [series]="humidityChartOptions.series"
-              [chart]="humidityChartOptions.chart"
-              [xaxis]="humidityChartOptions.xaxis"
-              [dataLabels]="humidityChartOptions.dataLabels"
-              [grid]="humidityChartOptions.grid"
-              [stroke]="humidityChartOptions.stroke"
-              [title]="humidityChartOptions.title"
-              ></apx-chart>
+              <apx-chart [series]="humidityChartOptions.series" [chart]="humidityChartOptions.chart"
+                [xaxis]="humidityChartOptions.xaxis" [dataLabels]="humidityChartOptions.dataLabels"
+                [grid]="humidityChartOptions.grid" [stroke]="humidityChartOptions.stroke"
+                [title]="humidityChartOptions.title"></apx-chart>
             </div>
           </div>
         </div>
@@ -76,34 +69,36 @@
     <div class="row">
 
       <div class="col-sm-6 mb-3 mb-sm-0">
-        <div class="card">
+        <div *ngIf="!isMotionSensorStatisticsData" class="spinner-grow text-primary" role="status"></div>
+
+        <div *ngIf="isMotionSensorStatisticsData | async" class="card">
           <div class="card-header bg-purple-brght-20 text-white">
-            <h2>Hareket</h2>
+            <div class="d-flex justify-content-between">
+              <h2>Hareket</h2>
+
+              <button class="btn btn-primary" (click)="showMotionDetails()" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">Detaylar</button>
+            </div>
           </div>
           <div class="card-body">
             <div id="lineChart3">
-              <apx-chart
-              [series]="motionSensorStatisticsChart.series"
-              [chart]="motionSensorStatisticsChart.chart"
-              [xaxis]="motionSensorStatisticsChart.xaxis"
-              [dataLabels]="motionSensorStatisticsChart.dataLabels"
-              [grid]="motionSensorStatisticsChart.grid"
-              [stroke]="motionSensorStatisticsChart.stroke"
-              [title]="motionSensorStatisticsChart.title"
-              [plotOptions]="motionSensorStatisticsChart.plotOptions"
-              ></apx-chart>
+              <apx-chart [series]="motionSensorStatisticsChart.series" [chart]="motionSensorStatisticsChart.chart"
+                [xaxis]="motionSensorStatisticsChart.xaxis" [dataLabels]="motionSensorStatisticsChart.dataLabels"
+                [grid]="motionSensorStatisticsChart.grid" [stroke]="motionSensorStatisticsChart.stroke"
+                [title]="motionSensorStatisticsChart.title"
+                [plotOptions]="motionSensorStatisticsChart.plotOptions"></apx-chart>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-sm-6">
+      <!-- <div class="col-sm-6">
         <div class="card">
           <div class="card-header bg-purple-drk-30 text-white">
             <h2>deneme</h2>
           </div>
-          <div class="card-body">
-            <!-- <div id="lineChart4">
+          <div class="card-body"> -->
+      <!-- <div id="lineChart4">
               <apx-chart
               [series]="chart4Options.series"
               [chart]="chart4Options.chart"
@@ -114,9 +109,9 @@
               [title]="chart4Options.title"
               ></apx-chart>
             </div> -->
-          </div>
+      <!-- </div>
         </div>
-      </div>
+      </div> -->
 
     </div>
 
@@ -125,4 +120,48 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tüm Hareketler</h5>
+        <!-- <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body">
 
+        <div *ngIf="!isMotionDevicesData" class="spinner-grow text-primary" role="status"></div>
+        <ng-container *ngIf="isMotionDevicesData | async">
+          <select #motionDeviceSelected (change)="motionDeviceChange(motionDeviceSelected.value)" class="form-select" id="motionDevices">
+            <option selected value="0">Lütfen bir cihaz seçiniz</option>
+            <option *ngFor="let device of motionDevices" value="{{device._id.device_id}}">{{device._id.device_name}}
+            </option>
+          </select>
+        </ng-container>
+        <br>
+
+        <!-- <div *ngIf="!isAllMotionsData" class="spinner-grow text-primary" role="status"></div> -->
+        <table *ngIf="isAllMotionsData | async" class="table">
+          <thead>
+            <th>
+              <tr>Hareket algılanan saatler</tr>
+            </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let motion of allMotions">
+              <td>{{motion.timestamp}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
