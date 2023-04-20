@@ -135,7 +135,8 @@
 
         <div *ngIf="!isMotionDevicesData" class="spinner-grow text-primary" role="status"></div>
         <ng-container *ngIf="isMotionDevicesData | async">
-          <select #motionDeviceSelected (change)="motionDeviceChange(motionDeviceSelected.value)" class="form-select" id="motionDevices">
+          <select #motionDeviceSelected (change)="motionDeviceChange(motionDeviceSelected.value)" class="form-select"
+            id="motionDevices">
             <option selected value="0">Lütfen bir cihaz seçiniz</option>
             <option *ngFor="let device of motionDevices" value="{{device._id.device_id}}">{{device._id.device_name}}
             </option>
@@ -143,15 +144,67 @@
         </ng-container>
         <br>
 
-        <!-- <div *ngIf="!isAllMotionsData" class="spinner-grow text-primary" role="status"></div> -->
+        <div class="form-check form-switch">
+          <input #isSearchInput (click)="changeIsSearchInput(isSearchInput.checked); resetAllMotions();" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+          <label *ngIf="!isSearchSwitch" class="form-check-label" for="flexSwitchCheckDefault">Tarih aralığına göre ara</label>
+          <label *ngIf="isSearchSwitch" class="form-check-label" for="flexSwitchCheckDefault">Belirlenen tarihten sonrasını ara</label>
+        </div>
+        <br>
+
+        <ng-container *ngIf="!isSearchSwitch">
+          <div *ngIf="isAllMotionsData | async">
+            <div class="row">
+              <div class="col-md-6">
+                <input #motionSearchDate type="datetime-local" class="form-control">
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-danger" (click)="resetAllMotions()">Sıfırla</button>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-primary" (click)="motionSearchByDate(motionSearchDate.value)">Ara</button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isSearchSwitch">
+          <div *ngIf="isAllMotionsData | async">
+            <div class="row">
+              <div class="col-md-6">
+                Başlangıç tarihi:
+                <input #motionSearchStartDate type="datetime-local" class="form-control">
+              </div>
+              <div class="col-md-6">
+                Bitiş tarihi:
+                <input #motionSearchEndDate type="datetime-local" class="form-control">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-7"></div>
+              <div class="col-md-2">
+                <button class="btn btn-danger" (click)="resetAllMotions()">Sıfırla</button>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-primary" (click)="motionSearchByDateRange(motionSearchStartDate.value, motionSearchEndDate.value)">Ara</button>
+              </div>
+              <div class="col-md-6"></div>
+            </div>
+
+          </div>
+        </ng-container>
+        <br>
+
         <table *ngIf="isAllMotionsData | async" class="table">
           <thead>
-            <th>
-              <tr>Hareket algılanan saatler</tr>
-            </th>
+            <tr>
+              <th>#</th>
+              <th>Hareket algılanan saatler</th>
+            </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let motion of allMotions">
+            <tr *ngFor="let motion of allMotions; index as i">
+              <td>{{i+1}}</td>
               <td>{{motion.timestamp}}</td>
             </tr>
           </tbody>

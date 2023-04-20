@@ -73,6 +73,8 @@ export class AdminsPageComponent implements OnInit {
   isAllMotionsData:Promise<boolean>;
   motionDevices:MotionDeviceModel[];
   allMotions:MotionModel[];
+  defaultAllMotions:MotionModel[];
+  isSearchSwitch:boolean = false;
 
   constructor(private navbarService: NavbarService, private readingsService: ReadingsService,
   private toastrService: ToastrService, private motionService:MotionsService) { }
@@ -170,6 +172,7 @@ export class AdminsPageComponent implements OnInit {
       if (response.success === false) this.toastrService.error(Messages.somethingWentWrong);
       else{
         this.allMotions = response.data;
+        this.defaultAllMotions = response.data;
         this.isAllMotionsData = Promise.resolve(true);
       }
     });
@@ -183,6 +186,38 @@ export class AdminsPageComponent implements OnInit {
     this.getAllMotionsById(deviceId);
   }
 
+  motionSearchByDate(date:string){
+    if (date !== "") {
+      let baseDate = new Date(date);
+      this.allMotions = this.allMotions.filter((element)=>{
+        let eDate = new Date(element.timestamp);
+        return eDate.getTime() >= baseDate.getTime();
+      });
+    }else{
+      this.toastrService.error("Lütfen bir tarih seçiniz");
+    }
+  }
+
+  motionSearchByDateRange(startDate:string, endDate:string){
+    if (startDate !== "" || endDate !== "") {
+      let baseStartDate = new Date(startDate);
+      let baseEndDate = new Date(endDate);
+      this.allMotions = this.allMotions.filter((element)=>{
+        let eDate = new Date(element.timestamp);
+        return eDate.getTime() >= baseStartDate.getTime() && eDate.getTime() <= baseEndDate.getTime();
+      })
+    }else{
+      this.toastrService.error("Lütfen tarihleri seçiniz");
+    }
+  }
+
+  resetAllMotions(){
+    this.allMotions = this.defaultAllMotions;
+  }
+
+  changeIsSearchInput(checked:boolean){
+    this.isSearchSwitch = checked;
+  }
 
   temperatureData(type: string) {
     return {
