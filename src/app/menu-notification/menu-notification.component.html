@@ -1,0 +1,25 @@
+<div class="offcanvas offcanvas-end bg-white"
+     tabindex="-1"
+     id="offcanvasNotifications"
+     aria-labelledby="offcanvasNotificationsLabel">
+  <div class="offcanvas-header">
+    <h2 class="h5 text-primary offcanvas-title"
+        id="offcanvasNotificationsLabel">
+      Bildirimler
+    </h2>
+    <button type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ng-container *ngFor="let notification of notificationsMockup; let i = index">
+      <app-card-notification [notification]="notification" [notificationId]="i"></app-card-notification>
+    </ng-container>
+  </div>
+</div>
+
+
+<!--
+data-bs-backdrop="static"
+ -->

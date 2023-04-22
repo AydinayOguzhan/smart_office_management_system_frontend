@@ -1,0 +1,20 @@
+<div class="bg-primary border-purple-dark-30 card">
+  <div class="card-header d-flex justify-content-end">
+    <a (click)="deleteNotification()"><i class="bi bi-x"></i></a>
+  </div>
+  <div class="card-body">
+    <h3 class="text-white fw-bold card-title">
+      <!-- {{ notification.title }} -->
+      Hareket Algılandı
+    </h3>
+    Cihaz ismi:
+    <span class="badge text-bg-primary ">
+      {{ notification.device_name }}
+    </span>
+    <br>
+    Tarih:
+    <span class="badge text-bg-primary">
+      {{ notification.timestamp }}
+    </span>
+  </div>
+</div>

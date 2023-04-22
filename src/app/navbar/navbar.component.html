@@ -10,31 +10,47 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-      </ul>
+      <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul> -->
       <!-- TODO: Bildirim yoksa boş olan, bildirim varsa dolu olan ikon görünecek -->
-      <!-- TODO: Bildirim için custom drowdown oluştur -->
-      <a href="/admin-panel"><i class="bi bi-bell text-white iconSize me-4"></i></a>
-      <!-- <a href="/admin-panel"><i class="bi bi-bell-fill text-white iconSize me-4"></i></a> -->
+
+      <div class="ms-auto"></div>
+
+      <div class="dropright">
+        <a class="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i *ngIf="notifications.length !== 0" class="bi bi-bell-fill text-white iconSize me-4"
+            data-bs-toggle="offcanvas" data-bs-target="#offcanvasNotifications"
+            aria-controls="offcanvasNotifications"></i>
+
+          <i *ngIf="notifications.length === 0" class="bi bi-bell text-white iconSize me-4"></i>
+        </a>
 
 
+        <a (click)="logout()" style="cursor:pointer"><i class="bi bi-arrow-bar-right text-white iconSize me-3"></i></a>
+      </div>
 
-      <a (click)="logout()" style="cursor:pointer"><i class="bi bi-arrow-bar-right text-white iconSize me-3"></i></a>
     </div>
   </div>
 </nav>
 
+<app-menu-notification ></app-menu-notification>
+
+
 <!-- Sidebar -->
-<div class="offcanvas offcanvas-start text-primary " tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+<div class="offcanvas offcanvas-start text-primary " tabindex="-1" id="offcanvasExample"
+  aria-labelledby="offcanvasExampleLabel">
   <div class="offcanvas-header">
     <h4 class="offcanvas-title" id="offcanvasExampleLabel">Akıllı Ofis Yönetim Sistemi</h4>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
     <ul class="nav nav-pills flex-column mb-auto">
+
       <li class="nav-item">
-        <a href="/admin-panel" [ngClass]="active === 1?'nav-link text-white fs-5 bg-primary':'nav-link link-dark fs-5'" >
+
+      </li>
+      <br>
+      <li class="nav-item">
+        <a href="/admin-panel" [ngClass]="active === 1?'nav-link text-white fs-5 bg-primary':'nav-link link-dark fs-5'">
           <i [ngClass]="active===1? 'bi bi-bar-chart-line text-white': 'bi bi-bar-chart-line text-purple-drk-50'"></i>
           Dashboard
         </a>
