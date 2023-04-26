@@ -30,3 +30,13 @@
 .text-align{
   text-align: center;
 }
+
+@keyframes example {
+  0%   {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+.animateObject{
+  animation-name: example;
+  animation-duration: 1s;
+}

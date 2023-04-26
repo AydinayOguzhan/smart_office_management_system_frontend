@@ -11,8 +11,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul> -->
-      <!-- TODO: Bildirim yoksa boş olan, bildirim varsa dolu olan ikon görünecek -->
-
       <div class="ms-auto"></div>
 
       <div class="dropright">
@@ -21,7 +19,9 @@
             data-bs-toggle="offcanvas" data-bs-target="#offcanvasNotifications"
             aria-controls="offcanvasNotifications"></i>
 
-          <i *ngIf="notifications.length === 0" class="bi bi-bell text-white iconSize me-4"></i>
+          <i *ngIf="notifications.length === 0" class="bi bi-bell text-white iconSize me-4"
+          data-bs-toggle="offcanvas" data-bs-target="#offcanvasNotifications"
+          aria-controls="offcanvasNotifications"></i>
         </a>
 
 
@@ -32,7 +32,7 @@
   </div>
 </nav>
 
-<app-menu-notification ></app-menu-notification>
+<app-menu-notification [notifications]="notifications" (deleteItemMenuOutput)="deleteItem($event)"></app-menu-notification>
 
 
 <!-- Sidebar -->
