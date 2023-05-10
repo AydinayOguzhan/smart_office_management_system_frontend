@@ -19,6 +19,7 @@ import { AuthInterceptor } from 'src/interceptors/auth/auth.interceptor';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { MenuNotificationComponent } from './menu-notification/menu-notification.component';
 import { CardNotificationComponent } from './card-notification/card-notification.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 
@@ -30,6 +31,7 @@ import { CardNotificationComponent } from './card-notification/card-notification
     NavbarComponent,
     LiveStreamComponent,
     RecordsComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,

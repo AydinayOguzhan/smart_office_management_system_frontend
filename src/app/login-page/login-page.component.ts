@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, FormControl, Validators, UntypedFormBuilder } from "@angular/forms";
 import { LoginService } from 'src/services/login/login.service';
 import { Router } from '@angular/router';
+import { Messages } from 'src/constants/messages';
 
 @Component({
   selector: 'app-login-page',
@@ -40,7 +41,7 @@ export class LoginPageComponent implements OnInit {
         }
       })
     }else{
-      this.toastrService.error("Lütfen boş alan bırakmayınız");
+      this.toastrService.error(Messages.pleaseFillTheBlanks);
     }
   }
 }

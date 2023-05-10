@@ -5,6 +5,10 @@ export class Urls{
   static readonly auth:string = "/auth";
   static readonly login:string = "/login";
 
+  static readonly forgotPassword:string = "/forgot_password";
+  static readonly checkCode:string = "/check_code";
+  static readonly changePassword:string = "/change_password";
+
   static readonly readings:string = "/readings";
   static readonly getDevices:string = "/get_devices";
   static readonly getTemperaturesByDevice:string = "/get_temperatures_by_device";
