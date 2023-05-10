@@ -16,6 +16,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptor } from 'src/interceptors/auth/auth.interceptor';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { MenuNotificationComponent } from './menu-notification/menu-notification.component';
+import { CardNotificationComponent } from './card-notification/card-notification.component';
+
+
 
 @NgModule({
   declarations: [
@@ -34,12 +39,15 @@ import { AuthInterceptor } from 'src/interceptors/auth/auth.interceptor';
     HttpClientModule,
     RouterModule,
     BrowserAnimationsModule,
+    OAuthModule.forRoot(),
     ToastrModule.forRoot({
-      positionClass:"toast-bottom-right"
-    })
+      positionClass: "toast-bottom-right"
+    }),
+    MenuNotificationComponent,
+    CardNotificationComponent,
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
