@@ -20,7 +20,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { MenuNotificationComponent } from './menu-notification/menu-notification.component';
 import { CardNotificationComponent } from './card-notification/card-notification.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -47,6 +47,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     }),
     MenuNotificationComponent,
     CardNotificationComponent,
+    FormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

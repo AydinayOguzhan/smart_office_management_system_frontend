@@ -19,4 +19,8 @@ export class Urls{
   static readonly getAllMotions:string = "/get_all_motions";
   static readonly getAllMotionsByDevice:string = "/get_all_motions_by_device";
   static readonly getAllMotionSensorStatistics:string = "/get_all_motion_sensor_statistics";
+
+  static readonly userNotifications:string = "/user_notifications";
+  static readonly getAllDetailsByEmail:string = "/get_all_details_by_email";
+  static readonly updateUserNotificationOptions:string = "/update";
 }

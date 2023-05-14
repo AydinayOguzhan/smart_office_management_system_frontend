@@ -13,15 +13,19 @@
       <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul> -->
       <div class="ms-auto"></div>
 
+      <a style="cursor:pointer" (click)="getAllNotificationSettingsByEmail();" data-bs-toggle="modal"
+        data-bs-target="#notificationModal"><i class="bi bi-wrench text-white iconSize me-4"></i></a>
+
+
       <div class="dropright">
-        <a class="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a style="cursor:pointer" class="" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
           <i *ngIf="notifications.length !== 0" class="bi bi-bell-fill text-white iconSize me-4"
             data-bs-toggle="offcanvas" data-bs-target="#offcanvasNotifications"
             aria-controls="offcanvasNotifications"></i>
 
-          <i *ngIf="notifications.length === 0" class="bi bi-bell text-white iconSize me-4"
-          data-bs-toggle="offcanvas" data-bs-target="#offcanvasNotifications"
-          aria-controls="offcanvasNotifications"></i>
+          <i *ngIf="notifications.length === 0" class="bi bi-bell text-white iconSize me-4" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNotifications" aria-controls="offcanvasNotifications"></i>
         </a>
 
 
@@ -32,7 +36,8 @@
   </div>
 </nav>
 
-<app-menu-notification [notifications]="notifications" (deleteItemMenuOutput)="deleteItem($event)"></app-menu-notification>
+<app-menu-notification [notifications]="notifications"
+  (deleteItemMenuOutput)="deleteItem($event)"></app-menu-notification>
 
 
 <!-- Sidebar -->
@@ -68,5 +73,47 @@
         </a>
       </li>
     </ul>
+  </div>
+</div>
+
+
+
+<!-- Notification Options Modal -->
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Bildirim Ayarları</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="isUserNotificationSettingsData">
+          <ng-container *ngFor="let item of userNotificationSettings; let i=index">
+
+
+            <label class="form-label">Bildirim İsmi</label>
+            <input class="form-control" disabled type="text" placeholder="{{item.name}}">
+            <br>
+
+            <label class="form-label">Email</label>
+            <input [(ngModel)]="userNotificationSettings[i].notificationMail" class="form-control" type="email">
+            <br>
+
+            <div class="form-check form-switch">
+              <input [(ngModel)]="userNotificationSettings[i].notification" class="form-check-input" type="checkbox" role="switch" >
+              <label class="form-label">Bildirim</label>
+            </div>
+
+            <br>
+            <hr>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button (click)="updateUserNotificationOptions()" type="button" class="btn btn-primary">Kaydet</button>
+      </div>
+    </div>
   </div>
 </div>
