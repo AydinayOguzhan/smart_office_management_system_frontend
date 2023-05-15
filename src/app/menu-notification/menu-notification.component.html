@@ -15,7 +15,18 @@
   <div class="offcanvas-body">
 
     <ng-container *ngFor="let notification of notifications; let i = index">
-      <app-card-notification [notification]="notification" [notificationId]="i" (deleteItemCardOutput)="deleteItemMenu($event)"></app-card-notification>
+      <ng-container *ngIf="notification.type === 'motion' ">
+        <app-card-notification [notification]="notification" [notificationId]="i" (deleteItemCardOutput)="deleteItemMenu($event)"></app-card-notification>
+      </ng-container>
+
+      <ng-container *ngIf="notification.type === 'temperature' ">
+        <app-temperature-card-notification [notification]="notification" [notificationId]="i" (deleteItemCardOutput)="deleteItemMenu($event)"></app-temperature-card-notification>
+      </ng-container>
+
+      <ng-container *ngIf="notification.type === 'humidity' ">
+        <app-humidity-card-notification [notification]="notification" [notificationId]="i" (deleteItemCardOutput)="deleteItemMenu($event)"></app-humidity-card-notification>
+      </ng-container>
+
     </ng-container>
   </div>
 </div>

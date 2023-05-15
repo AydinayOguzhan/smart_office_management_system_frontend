@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
       this.notifications = this.navbarService.readNotifications();
       this.notifications.push(response);
       window.localStorage.setItem("notifications", JSON.stringify(this.notifications));
-      this.toastrService.warning("Yeni bir hareket algılandı");
+      this.toastrService.warning("Yeni bildirim");
     });
   }
 
