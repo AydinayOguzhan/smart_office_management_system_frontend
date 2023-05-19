@@ -1,3 +1,63 @@
 <app-navbar></app-navbar>
 
-<p>records works!</p>
+<div class="container">
+  <br>
+
+  <div class="d-flex flex-sm-row flex-column justify-content-center me-5 ms-5">
+    <!-- <div class="mt-2"><h6>Lütfen bir tarih aralığı seçiniz: </h6></div> -->
+    <div class="me-4 mb-2">
+      <input #inputStartDate class="form-control" type="datetime-local">
+    </div>
+    <div class="me-4 mb-2">
+      <input #inputEndDate class="form-control" type="datetime-local">
+    </div>
+      <button (click)="getData(inputStartDate.value, inputEndDate.value)" class="btn btn-primary mb-2">Filtrele</button>
+  </div>
+
+
+  <br>
+  <div class="d-flex flex-sm-row flex-column justify-content-center">
+    <ng-container *ngIf="isGroups">
+      <ng-container *ngFor="let item of groupDatas; let i = index">
+        <button class="btn btn-primary me-2" (click)="deneme(i)">{{item.date | date}}</button>
+      </ng-container>
+    </ng-container>
+  </div>
+
+
+  <br>
+
+  <ng-container *ngIf="selectedDay">
+    <ng-container>
+      <div class="row">
+        <div class="col-md-8">
+          <video #videoTag width="100%" height="100%" controls [src]="setVideoSource(selectedDayValue.path)">
+            Tarayıcınız video desteklemiyor
+          </video>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card" >
+            <div class="card-body">
+              <div>
+                <ul class="list-group">
+                  <li *ngFor="let item of selectedDay.values; let i = index" class="list-group-item" [ngClass]="{'active': item._id === selectedDayValue._id}" (click)="changeSelectedDayValue(item)">
+                    <img src="../../assets/defaultThumbnail.png" alt="Default Thumbnail" width="25%" height="25%">
+                    {{item.timestamp | date : "short"}}
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+<br><br>
+</div>
+
+
+
+

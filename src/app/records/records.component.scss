@@ -1,0 +1,10 @@
+ul {
+  overflow-y: scroll;
+  margin: 0;
+  padding: 0;
+  max-height: 460px;
+
+  // Again, this is where the magic happens
+  -webkit-overflow-scrolling: touch;
+}
+

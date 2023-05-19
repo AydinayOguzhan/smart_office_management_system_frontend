@@ -23,4 +23,8 @@ export class Urls{
   static readonly userNotifications:string = "/user_notifications";
   static readonly getAllDetailsByEmail:string = "/get_all_details_by_email";
   static readonly updateUserNotificationOptions:string = "/update";
+
+  static readonly records:string = "/records";
+  static readonly getAllRecords:string = "/get_all";
+  static readonly getAllRecordsDateRange:string = "/get_all_date_range";
 }
