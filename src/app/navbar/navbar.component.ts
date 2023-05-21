@@ -31,6 +31,7 @@ export class NavbarComponent implements OnInit {
     this.websocketService.connect().subscribe((response)=>{
       this.notifications = this.navbarService.readNotifications();
       this.notifications.push(response);
+      this.notifications.reverse();
       window.localStorage.setItem("notifications", JSON.stringify(this.notifications));
       this.toastrService.warning("Yeni bildirim");
     });
