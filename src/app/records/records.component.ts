@@ -4,6 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RecordModel } from 'src/models/record/recordModel';
 import { ToastrService } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Messages } from 'src/constants/messages';
 
 @Component({
   selector: 'app-records',
@@ -26,17 +27,22 @@ export class RecordsComponent implements OnInit {
     this.getLastTwoDays();
   }
 
+
   getData(startDate: string, endDate: string) {
-    this.recordService.getAllDateRange(startDate, endDate).subscribe((response) => {
-      if (response.success === false) {
-        this.toastrService.error(response.message);
-        this.isGroups = false;
-      } else {
-        this.groups = this.groupByDate(response.data)
-        this.groupDatas = this.makeArray(this.groups)
-        this.isGroups = true;
-      }
-    });
+    if (startDate === "" || endDate === "") {
+      this.toastrService.error(Messages.pleaseFillTheBlanks);
+    }else{
+      this.recordService.getAllDateRange(startDate, endDate).subscribe((response) => {
+        if (response.success === false) {
+          this.toastrService.error(response.message);
+          this.isGroups = false;
+        } else {
+          this.groups = this.groupByDate(response.data)
+          this.groupDatas = this.makeArray(this.groups)
+          this.isGroups = true;
+        }
+      });
+    }
   }
 
   getLastTwoDays() {
