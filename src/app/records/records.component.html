@@ -19,7 +19,7 @@
   <div class="d-flex flex-sm-row flex-column justify-content-center">
     <ng-container *ngIf="isGroups">
       <ng-container *ngFor="let item of groupDatas; let i = index">
-        <button class="btn btn-primary me-2" (click)="deneme(i)">{{item.date | date}}</button>
+        <button class="btn btn-primary me-2" (click)="selectDay(i)">{{item.date | date}}</button>
       </ng-container>
     </ng-container>
   </div>

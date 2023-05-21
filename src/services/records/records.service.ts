@@ -21,4 +21,9 @@ export class RecordsService {
     let url = Urls.prodApiUrl + Urls.records + Urls.getAllRecordsDateRange + `/${startDate}/${endDate}`;
     return this.httpClient.get<ListResponseModel<RecordModel>>(url);
   }
+
+  getLastTwoDays():Observable<ListResponseModel<RecordModel>>{
+    let url = Urls.prodApiUrl + Urls.records + Urls.getLastTwoDaysRecords;
+    return this.httpClient.get<ListResponseModel<RecordModel>>(url);
+  }
 }

@@ -27,4 +27,5 @@ export class Urls{
   static readonly records:string = "/records";
   static readonly getAllRecords:string = "/get_all";
   static readonly getAllRecordsDateRange:string = "/get_all_date_range";
+  static readonly getLastTwoDaysRecords:string = "/get_last_two_days";
 }
